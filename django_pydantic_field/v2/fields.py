@@ -171,7 +171,8 @@ class PydanticSchemaField(JSONField, ty.Generic[types.ST]):
             return self.adapter.validate_python(value)
         except pydantic.ValidationError as exc:
             error_params = {"errors": exc.errors(), "field": self}
-            raise exceptions.ValidationError(exc.json(), code="invalid", params=error_params) from exc
+            print(f"ERROR: unable to validate json field due to: {exc.errors()}")
+            #raise exceptions.ValidationError(exc.json(), code="invalid", params=error_params) from exc
 
     def get_prep_value(self, value: ty.Any):
         value = self._prepare_raw_value(value)
